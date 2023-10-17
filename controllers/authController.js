@@ -1,6 +1,8 @@
 const { success, error } = require("../utils/reponseWrapper");
 const User = require("../model/User");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt");//used to encrypt the password infrom of hash
+const jwt=require('jsonwebtoken');
+//signup controller ---> function which create the user's account on Application
 const signupController = async (req, res) => {
   try {
     const { email, password, name } = req.body; //fetch the email ,password from req.body
@@ -21,6 +23,7 @@ const signupController = async (req, res) => {
     return res.send(error(500, err.message));
   }
 };
+//login controller --> allow verified user to login
 const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -53,6 +56,17 @@ function generateToken(payload) {
     const TOKEN_SEC_KEY = process.env.TOKEN_SEC_KEY; //fetch the token key
     return jwt.sign(payload, TOKEN_SEC_KEY, {
       expiresIn: "1d",
+    }); //use sign method of JWT to create & return accessToken
+  } catch (error) {
+    console.log(error);
+  }
+}
+//generate refresh Access Token:
+function generateRefreshToken(payload) {
+  try {
+    const REFRESH_TOKEN_SEC_KEY = process.env.REFRESH_TOKEN_SEC_KEY; //fetch the token key
+    return jwt.sign(payload, REFRESH_TOKEN_SEC_KEY, {
+      expiresIn: "1y",
     }); //use sign method of JWT to create & return accessToken
   } catch (error) {
     console.log(error);
