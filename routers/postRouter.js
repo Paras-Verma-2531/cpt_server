@@ -3,7 +3,7 @@ const {
   likeAndDislikeController,
   updatePostController,
   deletePostController,
-} = require("../Controllers/postController");
+} = require("../controllers/postController");
 const requireUserMiddleware = require("../middleware/requireUser");
 const postRouter = require("express").Router();
 postRouter.post("/", requireUserMiddleware, createPostController);

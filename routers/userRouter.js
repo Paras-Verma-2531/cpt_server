@@ -7,7 +7,7 @@ const {
   getProfileController,
   updateProfileController,
   getUserProfileController,
-} = require("../Controllers/userController");
+} = require("../controllers/userController");
 const requireUserMiddleware = require("../middleware/requireUser");
 const userRouter = require("express").Router();
 userRouter.post("/follow", requireUserMiddleware, followOrUnfollowController);
